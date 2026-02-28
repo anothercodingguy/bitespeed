@@ -1,0 +1,36 @@
+// ─────────────────────────────────────────────────────────────
+// Prisma Schema — Bitespeed Identity Reconciliation
+// ─────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Represents the link precedence of a contact row.
+enum LinkPrecedence {
+  primary
+  secondary
+}
+
+/// Contact stores identity information and supports linking
+/// multiple rows into a single reconciled identity cluster.
+model Contact {
+  id              Int             @id @default(autoincrement())
+  phoneNumber     String?         // stored as trimmed string of digits
+  email           String?         // stored as trimmed, lowercased string
+  linkedId        Int?            // points to the primary Contact's id (null for primaries)
+  linkPrecedence  LinkPrecedence  @default(primary)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?       // soft-delete: non-null means this row is logically deleted
+
+  // ── Indexes for fast lookups (NOT unique — multiple contacts may share same email/phone) ──
+  @@index([email])
+  @@index([phoneNumber])
+  @@index([linkedId])
+}

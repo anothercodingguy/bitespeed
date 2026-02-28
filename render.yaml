@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────
+# Render Blueprint — Bitespeed Identity Reconciliation
+# ─────────────────────────────────────────────────────────────
+# Deploy with: render blueprint apply
+# Or connect your GitHub repo and Render will auto-detect this file.
+
+databases:
+  - name: bitespeed-db
+    plan: free
+    databaseName: bitespeed
+    user: bitespeed_user
+
+services:
+  - type: web
+    name: bitespeed-identity
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    preDeployCommand: npx prisma migrate deploy && npx prisma db seed
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bitespeed-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production

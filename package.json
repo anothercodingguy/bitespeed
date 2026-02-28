@@ -1,0 +1,41 @@
+{
+  "name": "bitespeed-identity-reconciliation",
+  "version": "1.0.0",
+  "description": "Bitespeed Identity Reconciliation Service — POST /identify endpoint with contact linking and merging",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "postinstall": "prisma generate",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\""
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "keywords": [
+    "bitespeed",
+    "identity",
+    "reconciliation",
+    "contacts"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.5",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.3",
+    "prisma": "^6.4.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}
