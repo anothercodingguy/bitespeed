@@ -315,12 +315,8 @@ npx prisma studio
    - **Name:** `bitespeed-identity`
    - **Runtime:** Node
    - **Build Command:** `npm ci && npm run build`
-   - **Start Command:** `npm run start`
-4. Under **Advanced** → **Pre-Deploy Command**, set:
-   ```
-   npx prisma migrate deploy && npx prisma db seed
-   ```
-5. Add **Environment Variables**:
+   - **Start Command:** `npx prisma migrate deploy && npx prisma db seed && npm run start`
+4. Add **Environment Variables**:
    | Key            | Value                                      |
    |----------------|--------------------------------------------|
    | `DATABASE_URL` | _(paste the Internal Database URL from Step 1)_ |
@@ -376,7 +372,7 @@ git push -u origin main
 | Seed fails with "unique constraint" | Run `npx prisma migrate reset` to clear all data and re-run migrations + seed. |
 | Port already in use | Change `PORT` in `.env` or kill the process using that port. |
 | Render build fails | Ensure `Build Command` is `npm ci && npm run build`. Check Render build logs. |
-| Pre-deploy command fails on Render | Ensure `DATABASE_URL` is set. The pre-deploy command runs as: `npx prisma migrate deploy && npx prisma db seed`. |
+| Pre-deploy command error | Since Render free tier restricts Pre-Deploy Commands, migrations and seed are now run inside the `Start Command` just before the server boots. |
 
 ---
 
@@ -411,8 +407,7 @@ BiteSpeed/
 - [ ] Copy Internal Database URL
 - [ ] Create Render Web Service, connect GitHub repo
 - [ ] Set Build Command: `npm ci && npm run build`
-- [ ] Set Start Command: `npm run start`
-- [ ] Set Pre-Deploy Command: `npx prisma migrate deploy && npx prisma db seed`
+- [ ] Set Start Command: `npx prisma migrate deploy && npx prisma db seed && npm run start`
 - [ ] Add env var `DATABASE_URL` with the Postgres connection string
 - [ ] Add env var `NODE_ENV` = `production`
 - [ ] Deploy and verify health check at `https://your-service.onrender.com/`

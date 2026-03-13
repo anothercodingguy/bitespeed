@@ -9,8 +9,12 @@ const prisma = new PrismaClient();
 async function main(): Promise<void> {
     console.log("🌱 Seeding database with sample contacts...\n");
 
-    // Clear existing data (idempotent re-runs)
-    await prisma.contact.deleteMany();
+    // Check if database already has data to avoid wiping production on cold starts
+  const count = await prisma.contact.count();
+  if (count > 0) {
+    console.log(`  ✓ Database already contains ${count} contacts. Skipping seed.`);
+    return;
+  }
 
     // ── Example from Bitespeed PDF ──────────────────────────────
     // George has two contact rows:

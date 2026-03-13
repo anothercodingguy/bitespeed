@@ -16,8 +16,7 @@ services:
     runtime: node
     plan: free
     buildCommand: npm ci && npm run build
-    startCommand: npm run start
-    preDeployCommand: npx prisma migrate deploy && npx prisma db seed
+    startCommand: npx prisma migrate deploy && npx prisma db seed && npm run start
     envVars:
       - key: DATABASE_URL
         fromDatabase:
