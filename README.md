@@ -314,7 +314,7 @@ npx prisma studio
 3. Configure:
    - **Name:** `bitespeed-identity`
    - **Runtime:** Node
-   - **Build Command:** `npm ci && npm run build`
+   - **Build Command:** `npm install --include=dev && npm run build`
    - **Start Command:** `npx prisma migrate deploy && npx prisma db seed && npm run start`
 4. Add **Environment Variables**:
    | Key            | Value                                      |
@@ -371,7 +371,7 @@ git push -u origin main
 | `prisma generate` fails | Run `npm install` first. The `postinstall` script auto-runs `prisma generate`. |
 | Seed fails with "unique constraint" | Run `npx prisma migrate reset` to clear all data and re-run migrations + seed. |
 | Port already in use | Change `PORT` in `.env` or kill the process using that port. |
-| Render build fails | Ensure `Build Command` is `npm ci && npm run build`. Check Render build logs. |
+| Render build fails | Ensure `Build Command` is `npm install --include=dev && npm run build`. Check Render build logs. |
 | Pre-deploy command error | Since Render free tier restricts Pre-Deploy Commands, migrations and seed are now run inside the `Start Command` just before the server boots. |
 
 ---
@@ -406,7 +406,7 @@ BiteSpeed/
 - [ ] Create Render PostgreSQL database (free tier)
 - [ ] Copy Internal Database URL
 - [ ] Create Render Web Service, connect GitHub repo
-- [ ] Set Build Command: `npm ci && npm run build`
+- [ ] Set Build Command: `npm install --include=dev && npm run build`
 - [ ] Set Start Command: `npx prisma migrate deploy && npx prisma db seed && npm run start`
 - [ ] Add env var `DATABASE_URL` with the Postgres connection string
 - [ ] Add env var `NODE_ENV` = `production`
